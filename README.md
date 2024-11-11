@@ -20,7 +20,7 @@ The project is a **Blazor WebAssembly** application that implements a **breadth-
 4. **Front-End**  
    The front-end is built in C# using **Razor pages**, with HTML and CSS for styling.
    
-5. **Unit Testing**  
+5. **Testing**  
    Unit tests are written to validate functionality, using an in-memory mock database for reliable and isolated testing.
 
 ## Access to MoviesDB
