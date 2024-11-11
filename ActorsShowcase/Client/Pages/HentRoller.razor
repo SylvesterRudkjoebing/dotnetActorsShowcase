@@ -1,0 +1,46 @@
+﻿@page "/stars"
+@inject HttpClient Http
+<h3>Roller</h3>
+@if (roller == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>RolleID</th>
+                <th>StjerneID</th>
+                <th>FilmID</th>
+                <th class="text-end">CRUD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rolle in roller)
+            {
+                <tr>
+                    <td>@rolle.id</td>
+                    <td>@rolle.PersonId</td>
+                    <td>@rolle.MovieId</td>
+                    <td class="text-end">
+                        <a href="/stars/details/@rolle.id" class="btn btn-primary btn-sm">Detaljer</a>
+                        <a href="/stars/update/@rolle.id" class="btn btn-info btn-sm">Skift oplysninger</a>
+                        <a href="/stars/delete/@rolle.id" class="btn btn-danger btn-sm">Slet</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Star[]? roller;
+
+    protected override async Task OnInitializedAsync()
+    {
+        roller = await Http.GetFromJsonAsync<Star[]>("api/stars");
+    }
+}
+
+

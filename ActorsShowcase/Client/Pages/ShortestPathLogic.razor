@@ -1,0 +1,86 @@
+﻿@page "/ShortestPath"
+@inject HttpClient Http
+@using ActorsShowcase.Shared.Dtos
+
+<h3 class="mb-4">Discover the shortest path</h3>
+
+<div class="mb-3">
+    <label for="sourceActor" class="form-label">Starting Actor:</label>
+    <input id="sourceActor" @bind="sourceName" class="form-control" placeholder="Write the name of your starting actor"/>
+</div>
+
+<div class="mb-3">
+    <label for="targetActor" class="form-label">Target Actor:</label>
+    <input id="targetActor" @bind="targetName" class="form-control" placeholder="Write the name of your target actor"/>
+</div>
+
+<button @onclick="FindPath" class="btn btn-primary btn-lg">Calculate!</button>
+
+@if (!string.IsNullOrEmpty(status))
+{
+    <div class="alert alert-info mt-3" role="alert">@status</div>
+}
+
+@if (path != null && path.Count > 0)
+{
+    <h4 class="mt-4">How close are they...</h4>
+    <p>They have @path.Count degrees of separation:</p>
+    <ul class="list-unstyled">
+        <!-- First connection: Source actor with the first actor in the path -->
+        <li><strong>@sourceName</strong> starred with <strong>@path[0].PersonName</strong> in the movie "<em>@path[0].MovieTitle</em>".</li>
+
+        <!-- Intermediate connections, including the final connection -->
+        @for (var i = 0; i < path.Count - 1; i++)
+        {
+            var currentStep = path[i];
+            var nextStep = path[i + 1];
+            <li><strong>@currentStep.PersonName</strong> starred with <strong>@nextStep.PersonName</strong> in the movie "<em>@nextStep.MovieTitle</em>".</li>
+        }
+    </ul>
+}
+
+else if (path != null)
+{
+    <p class="mt-3 text-danger">No path found or invalid input.</p>
+}
+
+@code {
+    private string sourceName = string.Empty;
+    private string targetName = string.Empty;
+    private List<PathDto> path;
+    private string status = "";
+
+    private async Task FindPath()
+    {
+        if (string.IsNullOrWhiteSpace(sourceName) || string.IsNullOrWhiteSpace(targetName))
+        {
+            status = "Invalid name";
+            return;
+        }
+
+        status = "Loading data...";
+        await Http.GetAsync("api/shortestpath/loaddata");
+        status = "Data loaded... Finding path";
+
+        var response = await Http.GetAsync($"api/shortestpath/findpath?sourceName={Uri.EscapeDataString(sourceName)}&targetName={Uri.EscapeDataString(targetName)}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            path = await response.Content.ReadFromJsonAsync<List<PathDto>>();
+            status = "";
+        }
+        else
+        {
+            path = new List<PathDto>();
+            status = "No path found";
+        }
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") // Check if the pressed key is Enter
+        {
+            await FindPath(); // Call FindPath when Enter is pressed
+        }
+    }
+}

@@ -1,0 +1,45 @@
+﻿@page "/people"
+@inject HttpClient Http
+<h3>Actors</h3>
+@if (stars == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Birth Year</th>
+                <th class="text-end">CRUD</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var star in stars)
+            {
+                <tr>
+                    <td>@star.Name</td>
+                    <td>@star.Birth</td>
+                    <td class="text-end">
+                        <a href="/stars/details/@star.Id" class="btn btn-primary btn-sm">Detaljer</a>
+                        <a href="/stars/update/@star.Id" class="btn btn-info btn-sm">Skift oplysninger</a>
+                        <a href="/stars/delete/@star.Id" class="btn btn-danger btn-sm">Slet</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Person[]? stars;
+
+    protected override async Task OnInitializedAsync()
+    {
+        stars = await Http.GetFromJsonAsync<Person[]>("api/People");
+    }
+}
+
+
