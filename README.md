@@ -12,12 +12,15 @@ The project is a **Blazor WebAssembly** application that implements a **breadth-
    The project follows a "Database First" approach, using migrations from an Azure-hosted `MoviesDB` that includes three tables: `Actors`, `Films`, and `Starrings`.
    
 2. **BFS Algorithm Implementation**  
-   The BFS algorithm is encapsulated as a scoped service, designed with interfaces and low coupling to ensure clean and modular code.
+   The BFS algorithm is encapsulated as a scoped service, designed using interfacing and low coupling to ensure clean and modular code.
    
-3. **Front-End**  
+3. **Back-End**  
+   The back-end is built in C# using Entity Framework, including data access layer and controllers handling endpoints and http requests.
+   
+4. **Front-End**  
    The front-end is built in C# using **Razor pages**, with HTML and CSS for styling.
    
-4. **Unit Testing**  
+5. **Unit Testing**  
    Unit tests are written to validate functionality, using an in-memory mock database for reliable and isolated testing.
 
 ## Access to MoviesDB
