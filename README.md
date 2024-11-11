@@ -25,5 +25,5 @@ The project is a **Blazor WebAssembly** application that implements a **breadth-
 
 ## Access to MoviesDB
 
-If you would like access to `MoviesDB`, please feel free to message me to request Azure passthrough permissions.
+If you would like access to `MoviesDB`, please feel free to message me to request connection strings and Azure passthrough permissions.
 
