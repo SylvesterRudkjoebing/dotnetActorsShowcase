@@ -4,7 +4,7 @@ This repository demonstrates my proficiency in C# and .NET development.
 
 The project is a **Blazor WebAssembly** application that implements a **breadth-first search (BFS)** algorithm to identify the shortest "connection path" between two actors based on movies they starred in together 
 
-<img width="1083" alt="Skærmbillede 2024-11-11 kl  18 54 02" src="https://github.com/user-attachments/assets/9f88a387-779b-4c18-b2de-9b40f2683fd2">
+<img width="1083" alt="Skærmbillede 2024-11-11 kl  18 54 02" src="https://github.com/user-attachments/assets/dd0029af-9b95-4f93-a036-0f813cd3e029">
 
 ## Highlights
 
